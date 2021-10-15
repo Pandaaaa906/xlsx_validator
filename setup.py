@@ -7,5 +7,5 @@ setup(
     author_email="ye.pandaaaa906@gmail.com",
     description="Thanks to pydantic, we got a nicer way to extra & validate rows from xslx",
     url="https://github.com/Pandaaaa906/xlsx_validator",
-    packages=find_packages()
+    packages=find_packages(exclude=['tests']),
 )
