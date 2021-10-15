@@ -1,24 +1,26 @@
 # Xlsx Validator
 
 ```
-Thanks to pydantic, we got a nicer way to extra & validate rows from Excel files.
+Thanks to pydantic, we got a nicer way to extract & validate data from Excel files.
 ```
 
 
-### 1. define a template model
+### 1. Define a template model
 
 ```python
 # templates.py
 from typing import Optional
+from datetime import datetime
 
 from pydantic import Field
 from xlsx_validator import SheetTemplate, ImageCell
 
 
 class ProductSheet(SheetTemplate):
-    sku: Optional[str] = Field(alias='#SKU')
+    # using alias can easily handle header label
+    sku: str = Field(alias='#SKU')
+    created_at: Optional[datetime] = Field(alias='CreatedAt')
     img: Optional[ImageCell] = Field(alias='#IMG')  # Image also supported
-
 ```
 
 ### 2. Extract data
