@@ -14,10 +14,10 @@ class SheetTemplate(BaseModel):
             value = v.value
         return value
 
-    @validator('*')
+    @validator('*', pre=True)
     def default(cls, v, field):
         if v is None:
-            return field.default
+            return field.get_default()
         return v
 
     class Config:

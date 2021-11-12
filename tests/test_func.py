@@ -9,9 +9,10 @@ from xlsx_validator import validate_xlsx, SheetTemplate, ImageCell
 
 
 class TestSheet(SheetTemplate):
-    text: Optional[str] = Field(alias='TextValue', default='default value')
+    text: str = Field(alias='TextValue', default='default value')
     number: str = Field(alias='NumericValue')
     date: datetime = Field(alias='DateValue')
+    optional_text: Optional[str] = Field(alias='OptionalText')
     img: Optional[ImageCell] = Field(alias='Image')
 
 

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="xlsx_validator",
-    version="1.0",
+    version="1.0.1",
     author="Pandaaaa906",
     author_email="ye.pandaaaa906@gmail.com",
     description="Thanks to pydantic, we got a nicer way to extra & validate rows from xslx",
