@@ -8,7 +8,7 @@ from pydantic import BaseModel, validator, root_validator
 class SheetTemplate(BaseModel):
     @root_validator(pre=True)
     def trans_cell(cls, values):
-        for k, v in values:
+        for k, v in values.items():
             if isinstance(v, (Cell, ReadOnlyCell, EmptyCell)):
                 values[k] = v.value
         return values
