@@ -2,17 +2,16 @@ from PIL.Image import Image
 from openpyxl.cell import Cell, ReadOnlyCell
 from openpyxl.cell.read_only import EmptyCell
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, root_validator
 
 
 class SheetTemplate(BaseModel):
-    @validator('*', pre=True)
-    def trans_cell(cls, v):
-        if not isinstance(v, (Cell, ReadOnlyCell, EmptyCell)):
-            value = v
-        else:
-            value = v.value
-        return value
+    @root_validator(pre=True)
+    def trans_cell(cls, values):
+        for k, v in values:
+            if isinstance(v, (Cell, ReadOnlyCell, EmptyCell)):
+                values[k] = v.value
+        return values
 
     @validator('*', pre=True)
     def default(cls, v, field):
