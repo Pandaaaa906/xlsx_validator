@@ -20,8 +20,8 @@ def load_workbook(
 
 def validate_xlsx(
         fp: Union[str, Path], model: Type[SheetTemplate],
-        sheet_index: int = 0, ignore_validate_errors=False,
-        excel_reader=ExcelReader
+        sheet_index: int = 0, return_validate_errors=False,
+        excel_reader=ExcelReader, **kwargs
 ):
     wb = load_workbook(fp, excel_reader=excel_reader)
     sheet = wb.worksheets[sheet_index]
@@ -32,8 +32,8 @@ def validate_xlsx(
         try:
             item = model.validate({key: v for key, v in zip(headers, raw_row) if key is not None},)
         except BaseException as e:
-            if ignore_validate_errors:
-                continue
+            if return_validate_errors:
+                yield e
             raise e
 
         yield item
