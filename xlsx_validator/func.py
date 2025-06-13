@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Type, Union
+from typing import Type, Union, TypeVar, Iterable
 
 from openpyxl.reader.excel import ExcelReader
 
@@ -17,12 +17,14 @@ def load_workbook(
     reader.read()
     return reader.wb
 
+T = TypeVar('T', bound=SheetTemplate)
+
 
 def validate_xlsx(
-        fp: Union[str, Path], model: Type[SheetTemplate],
+        fp: Union[str, Path], model: Type[T],
         sheet_index: int = 0, return_validate_errors=False,
         excel_reader=ExcelReader, **kwargs
-):
+) -> Iterable[T]:
     wb = load_workbook(fp, excel_reader=excel_reader)
     sheet = wb.worksheets[sheet_index]
     rows = sheet.iter_rows()
